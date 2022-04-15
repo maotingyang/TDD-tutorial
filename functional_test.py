@@ -8,9 +8,10 @@ class NewVisitorTest(unittest.TestCase):
     
     def setUp(self) -> None:
         self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(3)
+        self.browser.implicitly_wait(5)
 
     def tearDown(self) -> None:
+        self.browser.implicitly_wait(5)
         self.browser.quit()
 
     def test_can_start_a_list_and_retrieve_it_later(self):
@@ -41,7 +42,8 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows)
+            any(row.text == '1: Buy peacock feathers' for row in rows),
+            "New to-do item did not appear in table"
         )
 
         # 此時仍然有一個文字方塊，讓她可以加入其他項目
